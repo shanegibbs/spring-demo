@@ -25,7 +25,7 @@ public class HomeController {
     public String homePage(Model model) {
         model.addAttribute("appName", appName);
 
-        ResponseEntity<Thing> thing = restTemplate.getForEntity("http://localhost:8081/things/100", Thing.class);
+        ResponseEntity<Thing> thing = restTemplate.getForEntity("http://localhost:8081/things/20", Thing.class);
 
         return "home";
     }
