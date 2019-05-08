@@ -1,7 +1,9 @@
-package com.gibbsdevops.springdemo.web.controllers;
+package com.gibbsdevops.springdemo.api.controllers;
 
 import com.gibbsdevops.springdemo.model.Thing;
-import com.gibbsdevops.springdemo.repo.ThingRepository;
+import com.gibbsdevops.springdemo.api.repo.ThingRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,11 +18,18 @@ import java.util.Random;
 @RequestMapping("things")
 public class ThingRestController {
 
+    private final Logger LOG = LoggerFactory.getLogger(ThingRestController.class);
+
     @Autowired
     private ThingRepository thingRepository;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    @GetMapping(path = "/")
+    public String getRoot() {
+        return "things";
+    }
 
     @GetMapping(path = "/{id}", produces = "application/json")
     public @ResponseBody
@@ -32,7 +41,9 @@ public class ThingRestController {
             e.printStackTrace();
         }
 
+        LOG.warn("Start rabbit");
         rabbitTemplate.convertAndSend("fanout.exchange", "", "hello");
+        LOG.warn("End rabbit");
 
         return thingRepository.findById(id).get();
     }

@@ -1,4 +1,4 @@
-package com.gibbsdevops.springdemo.web;
+package com.gibbsdevops.springdemo.common;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

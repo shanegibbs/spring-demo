@@ -1,4 +1,4 @@
-package com.gibbsdevops.springdemo.repo;
+package com.gibbsdevops.springdemo.api.repo;
 
 import com.gibbsdevops.springdemo.model.Thing;
 import org.springframework.data.repository.CrudRepository;

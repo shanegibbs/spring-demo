@@ -1,17 +1,22 @@
-package com.gibbsdevops.springdemo;
+package com.gibbsdevops.springdemo.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.opentracing.Tracer;
 import io.opentracing.contrib.spring.web.client.TracingRestTemplateInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
 
-@Configuration
-public class RestClientConfig {
+@SpringBootApplication
+public class WebApplication {
+
+    public static void main(String[] args){
+        System.setProperty("spring.config.location", "classpath:common.properties,classpath:web.properties");
+        SpringApplication.run(WebApplication.class, args);
+    }
 
     @Autowired
     Tracer tracer;
@@ -20,9 +25,6 @@ public class RestClientConfig {
     RestTemplate restTemplate() {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setInterceptors(Collections.singletonList(new TracingRestTemplateInterceptor(tracer)));
-        // MappingJacksonHttpMessageConverter converter = new MappingJacksonHttpMessageConverter();
-//        converter.setObjectMapper(new ObjectMapper());
-//        restTemplate.getMessageConverters().add(converter);
         return restTemplate;
     }
 }
