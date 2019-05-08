@@ -1,5 +1,7 @@
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
+
 run:
-	mvn spring-boot:run
+	./mvnw spring-boot:run
 
 jaeger:
 	docker run -it --name jaeger \

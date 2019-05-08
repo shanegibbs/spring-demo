@@ -15,6 +15,7 @@ import java.util.Collections;
 
 @Controller
 public class HomeController {
+
     @Value("${spring.application.name}")
     String appName;
 
@@ -25,7 +26,7 @@ public class HomeController {
     public String homePage(Model model) {
         model.addAttribute("appName", appName);
 
-        ResponseEntity<Thing> thing = restTemplate.getForEntity("http://localhost:8081/things/20", Thing.class);
+        ResponseEntity<Thing> thing = restTemplate.getForEntity("http://localhost:8081/things/1", Thing.class);
 
         return "home";
     }
